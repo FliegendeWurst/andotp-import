@@ -85,8 +85,8 @@ pub enum Error {
 	Cryptography(ring::error::Unspecified),
 	#[error("TOTP import error")]
 	TotpError(#[from] TotpUrlError),
-    #[error("unknown algorithm `{0}`")]
-    UnknownAlgorithm(String)
+	#[error("unknown algorithm `{0}`")]
+	UnknownAlgorithm(String),
 }
 
 impl From<ring::error::Unspecified> for Error {

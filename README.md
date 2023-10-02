@@ -5,7 +5,7 @@ This is a simple crate to read encrypted backups created by the [andOTP](https:/
 ## Usage
 
 Create an encrypted backup in the app and copy it to where you need it.
-The code below will prompt for a password, open the backup file and print all current codes.
+The code below will prompt for a password, open the backup file and print all current TOTP codes.
 
 ```
 fn main() {
@@ -19,7 +19,6 @@ fn main() {
 ```
 
 The full API documentation is available at [docs.rs](https://docs.rs/andotp-import/).
-See [totp-rs](https://docs.rs/totp-rs/) for details on the provided TOTP values.
 
 ## License
 
