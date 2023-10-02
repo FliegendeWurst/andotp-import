@@ -1,0 +1,24 @@
+[package]
+name = "andotp-import"
+version = "0.1.0"
+edition = "2021"
+authors = ["FliegendeWurst <2012gdwu@posteo.de>"]
+description = "andOTP backup reader"
+repository = "https://github.com/FliegendeWurst/andotp-import/"
+license = "MIT"
+keywords = ["totp"]
+categories = ["cryptography"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+byteorder = "1.4.3"
+ring = "0.17.0"
+serde = "1.0.188"
+serde_derive = "1.0.188"
+serde_json = "1.0.107"
+thiserror = "1.0.49"
+totp-rs = "5.3.0"
+
+[dev-dependencies]
+rpassword = "7.2.0"
