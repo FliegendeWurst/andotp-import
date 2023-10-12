@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 use std::{
 	fs,
 	io::{BufRead, Cursor, Read},
@@ -16,11 +18,13 @@ use totp_rs::{Algorithm, Secret, SecretParseError, TotpUrlError, TOTP};
 
 static PBKDF2_ALG: pbkdf2::Algorithm = pbkdf2::PBKDF2_HMAC_SHA1;
 
+/// Import andOTP backup from file.
 pub fn read_from_file<P: AsRef<Path>>(path: P, password: &str) -> Result<Vec<(Account, TOTP)>, Error> {
 	let data = fs::read(path)?;
 	read_from_bytes(&data, password)
 }
 
+/// Import andOTP backup from memory.
 pub fn read_from_bytes(bytes: &[u8], password: &str) -> Result<Vec<(Account, TOTP)>, Error> {
 	let mut file_content = Cursor::new(bytes);
 
@@ -72,6 +76,7 @@ pub fn read_from_bytes(bytes: &[u8], password: &str) -> Result<Vec<(Account, TOT
 }
 
 #[derive(thiserror::Error, Debug)]
+/// Import error.
 pub enum Error {
 	#[error("I/O error")]
 	Io(#[from] std::io::Error),
@@ -102,20 +107,22 @@ impl From<SecretParseError> for Error {
 }
 
 #[derive(Deserialize, Debug)]
+/// TOTP account.
 pub struct Account {
-	pub secret: String,
 	pub issuer: String,
 	/// Label for this entry. This is displayed underneath the current code in the andOTP app.
 	pub label: String,
-	pub digits: usize,
 	#[serde(rename = "type")]
 	/// Type of account. Currently only TOTP is supported, other types are silently ignored.
 	pub totp_type: String,
-	pub algorithm: String,
-	/// Thumbnail ID. Either "Default" or a name. Full list of possible values: https://github.com/andOTP/andOTP/tree/master/app/src/main/res/drawable
+	/// Thumbnail ID. Either "Default" or a name. [Full list of possible values](https://github.com/andOTP/andOTP/tree/master/app/src/main/res/drawable).
 	pub thumbnail: String,
 	pub last_used: i64,
 	pub used_frequency: f64,
-	period: u64,
 	pub tags: Value,
+	/// Encoded TOTP secret. Use the provided [`totp_rs::TOTP`] instead.
+	pub secret: String,
+	pub digits: usize,
+	pub algorithm: String,
+	pub period: u64,
 }
