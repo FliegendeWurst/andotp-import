@@ -58,7 +58,7 @@ pub fn read_from_bytes(bytes: &[u8], password: &str) -> Result<Vec<(Account, TOT
 			// TODO: implement other types
 			continue;
 		}
-		let totp = TOTP::new(
+		let totp = TOTP::new_unchecked(
 			match acct.algorithm.as_str() {
 				"SHA1" => Algorithm::SHA1,
 				"SHA256" => Algorithm::SHA256,
@@ -69,7 +69,7 @@ pub fn read_from_bytes(bytes: &[u8], password: &str) -> Result<Vec<(Account, TOT
 			1,
 			acct.period,
 			Secret::Encoded(acct.secret.clone()).to_bytes()?,
-		)?;
+		);
 		totps.push((acct, totp));
 	}
 	Ok(totps)
