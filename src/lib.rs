@@ -106,7 +106,7 @@ impl From<SecretParseError> for Error {
 	}
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone, PartialEq)]
 /// TOTP account.
 pub struct Account {
 	pub issuer: String,
